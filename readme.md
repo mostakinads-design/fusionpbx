@@ -5,6 +5,8 @@ What is [FusionPBX](https://www.fusionpbx.com/)?
 
 It provides the functionality your business needs and brings carrier grade switching, and corporate-level phone system features to small, medium, and large businesses. Read more at [FusionPBX](https://www.fusionpbx.com/). [Please visit our youtube channel](https://www.youtube.com/FusionPBX)
 
+**Note**: If you're looking for a modern UI with Laravel and Vue.js, check out [FS PBX](https://github.com/nemerald-voip/fspbx) - a contemporary reimplementation. See [ALTERNATIVES.md](ALTERNATIVES.md) for comparison.
+
 In addition to providing all of the usual PBX functionality, FusionPBX allows you to configure:
 
 - Multi-Tenant
@@ -65,6 +67,10 @@ Some installations require special considerations. Visit https://github.com/fusi
 OPTIONAL MODULES
 --------------------------------------
 FusionPBX supports optional add-on modules such as billing, advanced reporting, and more. For information on how to download and install optional modules, see [MODULES.md](MODULES.md).
+
+MODERN ALTERNATIVES
+--------------------------------------
+Looking for a modern user interface with Laravel and Vue.js? Check out **FS PBX**, a complete reimplementation of FusionPBX with contemporary web technologies. See [ALTERNATIVES.md](ALTERNATIVES.md) for detailed information about FS PBX and other modern implementations.
 
 ### ISSUES
 If you find a bug sign up for an account on [www.fusionpbx.com](https://www.fusionpbx.com) to report the issue.
