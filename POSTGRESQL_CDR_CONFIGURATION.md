@@ -58,7 +58,7 @@ sudo nano /etc/freeswitch/vars.xml
 Find the Database section and update the `dsn_cdr` variable with your actual credentials:
 
 ```xml
-<X-PRE-PROCESS cmd="set" data="dsn_cdr=host=127.0.0.1 user=fusionpbx password=Mh3FFWl8VFEGuYQ6EientF1ETA dbname=fusionpbx connect_timeout=10" category="Database" enabled="true" uuid="8b3a9d4c-1f7e-4e2a-9c5b-7d8e6f9a0b1c"/>
+<X-PRE-PROCESS cmd="set" data="dsn_cdr=host=127.0.0.1 user=fusionpbx password=YOUR_PASSWORD_HERE dbname=fusionpbx connect_timeout=10" category="Database" enabled="true" uuid="8b3a9d4c-1f7e-4e2a-9c5b-7d8e6f9a0b1c"/>
 ```
 
 Then reload FreeSwitch configuration:
@@ -75,7 +75,7 @@ fs_cli -x "reloadxml"
 4. Click **Edit**
 5. Update the value with your database credentials:
    ```
-   host=127.0.0.1 user=fusionpbx password=YOUR_PASSWORD dbname=fusionpbx connect_timeout=10
+   host=127.0.0.1 user=fusionpbx password=YOUR_PASSWORD_HERE dbname=fusionpbx connect_timeout=10
    ```
 6. Click **Save**
 7. Navigate to: **Status** → **SIP Status**
@@ -132,7 +132,7 @@ Server = 127.0.0.1
 Port = 5432
 Database = fusionpbx
 Username = fusionpbx
-Password = Mh3FFWl8VFEGuYQ6EientF1ETA
+Password = YOUR_PASSWORD_HERE
 ```
 
 ### Step 2: Update dsn_voicemail variable
@@ -140,7 +140,7 @@ Password = Mh3FFWl8VFEGuYQ6EientF1ETA
 In vars.xml (or via web interface), set:
 
 ```xml
-<X-PRE-PROCESS cmd="set" data="dsn_voicemail=fusionpbx_odbc:fusionpbx:Mh3FFWl8VFEGuYQ6EientF1ETA" .../>
+<X-PRE-PROCESS cmd="set" data="dsn_voicemail=fusionpbx_odbc:fusionpbx:YOUR_PASSWORD_HERE" .../>
 ```
 
 Format: `dsn_name:username:password`

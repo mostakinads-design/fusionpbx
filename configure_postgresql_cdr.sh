@@ -53,7 +53,7 @@ find_fusionpbx_config() {
 parse_config() {
     local config_file="$1"
     local key="$2"
-    grep "^${key}" "$config_file" | cut -d'=' -f2- | xargs
+    grep "^[[:space:]]*${key}" "$config_file" | cut -d'=' -f2- | xargs
 }
 
 # Function to find FreeSwitch vars.xml location
@@ -139,10 +139,13 @@ configure_database() {
     # Update vars.xml
     print_info "Updating vars.xml with database credentials..."
     
+    # Escape special characters in the connection string for sed
+    local dsn_cdr_escaped=$(echo "$dsn_cdr" | sed 's/[&/\]/\\&/g')
+    
     # Check if dsn_cdr already exists
     if grep -q 'data="dsn_cdr=' "$vars_xml"; then
-        # Update existing
-        sed -i "s|data=\"dsn_cdr=[^\"]*\"|data=\"dsn_cdr=${dsn_cdr}\"|g" "$vars_xml"
+        # Update existing using @ as delimiter to avoid conflicts with special chars
+        sed -i "s@data=\"dsn_cdr=[^\"]*\"@data=\"dsn_cdr=${dsn_cdr_escaped}\"@g" "$vars_xml"
         print_success "Updated existing dsn_cdr variable"
     else
         print_warning "dsn_cdr variable not found in vars.xml"
