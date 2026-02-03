@@ -144,7 +144,7 @@ There is no automated migration tool between FusionPBX and FS PBX. Migration typ
 ### FS PBX Resources
 - GitHub Repository: https://github.com/nemerald-voip/fspbx
 - Wiki Documentation: https://github.com/nemerald-voip/fspbx/wiki
-- Installation Guide: https://github.com/nemerald-voip/fspbx/wiki/How-to-Secure-FS-PBX-with-a-Let%E2%80%99s-Encrypt-SSL-Certificate
+- Installation Guide: https://github.com/nemerald-voip/fspbx/wiki/How-to-Secure-FS-PBX-with-a-Let's-Encrypt-SSL-Certificate
 
 ## Getting Help
 
