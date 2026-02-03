@@ -57,6 +57,22 @@
 	$text['label-assign_rates']['en-gb'] = "Assign Rates";
 	$text['label-assigned_rates']['en-us'] = "Assigned Rates";
 	$text['label-assigned_rates']['en-gb'] = "Assigned Rates";
+	$text['label-rate_plans']['en-us'] = "Rate Plans";
+	$text['label-rate_plans']['en-gb'] = "Rate Plans";
+	$text['label-prepaid_balances']['en-us'] = "Prepaid Balances";
+	$text['label-prepaid_balances']['en-gb'] = "Prepaid Balances";
+	$text['label-usage_records']['en-us'] = "Usage Records";
+	$text['label-usage_records']['en-gb'] = "Usage Records";
+	$text['label-low_balance_alerts']['en-us'] = "Low Balance Alerts";
+	$text['label-low_balance_alerts']['en-gb'] = "Low Balance Alerts";
+	$text['label-total_balance']['en-us'] = "Total Balance";
+	$text['label-total_balance']['en-gb'] = "Total Balance";
+	$text['label-today_usage']['en-us'] = "Today's Usage";
+	$text['label-today_usage']['en-gb'] = "Today's Usage";
+	$text['label-recent_usage']['en-us'] = "Recent Usage";
+	$text['label-recent_usage']['en-gb'] = "Recent Usage";
+	$text['label-no_recent_usage']['en-us'] = "No recent usage found";
+	$text['label-no_recent_usage']['en-gb'] = "No recent usage found";
 
 	$text['description-rate_name']['en-us'] = "Enter a name for this rate plan.";
 	$text['description-rate_name']['en-gb'] = "Enter a name for this rate plan.";
@@ -78,6 +94,10 @@
 	$text['description-low_balance_threshold']['en-gb'] = "Balance level at which to send low balance alerts.";
 	$text['description-assign_rates']['en-us'] = "Assign multiple rate plans (prefixes) to this user or agent.";
 	$text['description-assign_rates']['en-gb'] = "Assign multiple rate plans (prefixes) to this user or agent.";
+	$text['description-total_balance']['en-us'] = "Total prepaid balance across all users in this domain.";
+	$text['description-total_balance']['en-gb'] = "Total prepaid balance across all users in this domain.";
+	$text['description-today_usage']['en-us'] = "Total usage cost for today.";
+	$text['description-today_usage']['en-gb'] = "Total usage cost for today.";
 
 	$text['message-add']['en-us'] = "Record Added";
 	$text['message-add']['en-gb'] = "Record Added";
@@ -96,6 +116,12 @@
 	$text['button-save']['en-gb'] = "Save";
 	$text['button-back']['en-us'] = "Back";
 	$text['button-back']['en-gb'] = "Back";
+	$text['button-view']['en-us'] = "View";
+	$text['button-view']['en-gb'] = "View";
+	$text['button-view_all']['en-us'] = "View All";
+	$text['button-view_all']['en-gb'] = "View All";
+	$text['button-refresh']['en-us'] = "Refresh";
+	$text['button-refresh']['en-gb'] = "Refresh";
 
 	$text['confirm-delete']['en-us'] = "Do you really want to delete this?";
 	$text['confirm-delete']['en-gb'] = "Do you really want to delete this?";

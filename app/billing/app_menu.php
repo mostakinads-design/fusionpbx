@@ -6,7 +6,7 @@
 	$apps[$x]['menu'][$y]['uuid'] = "b12c9a8f-5e4d-4b3a-8f2e-1a2b3c4d5e6f";
 	$apps[$x]['menu'][$y]['parent_uuid'] = "fd29e39c-c936-f5fc-8e2b-611681b266b5";
 	$apps[$x]['menu'][$y]['category'] = "internal";
-	$apps[$x]['menu'][$y]['path'] = "/app/billing/billing_rates.php";
+	$apps[$x]['menu'][$y]['path'] = "/app/billing/billing.php";
 	$apps[$x]['menu'][$y]['order'] = "";
 	$apps[$x]['menu'][$y]['groups'][] = "superadmin";
 	$apps[$x]['menu'][$y]['groups'][] = "admin";
