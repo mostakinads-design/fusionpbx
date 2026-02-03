@@ -140,4 +140,10 @@
    <X-PRE-PROCESS cmd="set" data="disable_system_api_commands=true" category="Security" enabled="true" uuid="f2f94b51-069a-4d6d-989a-1978ef77fad7"/>
    <X-PRE-PROCESS cmd="set" data="disable_system_app_commands=true" category="Security" enabled="true" uuid="2a921f50-7954-4505-bc01-558195b3f8db"/>
 
+   <!-- Database -->
+   <!-- PostgreSQL connection string for CDR and other modules. Update this with your actual database credentials. -->
+   <X-PRE-PROCESS cmd="set" data="dsn_cdr=host=127.0.0.1 user=fusionpbx password=CHANGE_ME dbname=fusionpbx connect_timeout=10" category="Database" enabled="true" uuid="8b3a9d4c-1f7e-4e2a-9c5b-7d8e6f9a0b1c"/>
+   <!-- ODBC DSN for voicemail (format: dsn_name:username:password) - leave empty to use SQLite -->
+   <X-PRE-PROCESS cmd="set" data="dsn_voicemail=" category="Database" enabled="true" uuid="9c4b0e5d-2g8f-5f3b-0d6c-8e9f7g0b2d3d"/>
+
 </include>
