@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FusionPBX Billing - Outbound Call with Billing Integration
+  
+  This is a complete example of an outbound dialplan with billing integration.
+  
+  Installation:
+  1. Modify your existing outbound routes to include billing checks
+  2. Or use this as a template for new outbound routes
+  
+  Features:
+  - Pre-call balance check
+  - Rate lookup based on destination
+  - Cost calculation during call
+  - Automatic hangup on insufficient balance
+  - CDR integration for post-call billing
+-->
+<include>
+  <extension name="outbound_with_billing">
+    <condition field="${call_direction}" expression="^outbound$"/>
+    <condition field="destination_number" expression="^(\d{7,})$">
+      
+      <!-- Log the outbound call attempt -->
+      <action application="log" data="INFO Billing: Outbound call from ${caller_id_number} to ${destination_number}"/>
+      
+      <!-- Set billing variables -->
+      <action application="set" data="nibble_account=${user_uuid}"/>
+      <action application="set" data="domain_uuid=${domain_uuid}"/>
+      
+      <!-- Look up rate from billing_rates table via API -->
+      <!-- You can use lua script or API call to get the rate -->
+      <action application="set" data="billing_rate=${lua(check_rate.lua ${destination_number})}"/>
+      
+      <!-- Set the rate per minute for nibblebill -->
+      <action application="set" data="nibble_rate=${billing_rate}"/>
+      
+      <!-- Enable nibblebill for this call -->
+      <action application="nibblebill" data="check"/>
+      
+      <!-- Continue with outbound routing -->
+      <action application="set" data="hangup_after_bridge=true"/>
+      <action application="set" data="continue_on_fail=true"/>
+      
+      <!-- Bridge to gateway or provider -->
+      <!-- Replace with your actual gateway -->
+      <action application="bridge" data="sofia/gateway/your_gateway/${destination_number}"/>
+      
+      <!-- Post-call billing will happen via CDR hook -->
+      
+    </condition>
+  </extension>
+</include>

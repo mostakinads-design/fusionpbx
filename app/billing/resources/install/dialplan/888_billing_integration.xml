@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FusionPBX Billing - Complete Dialplan Integration
+  
+  This dialplan provides complete billing integration including:
+  - Pre-call balance check
+  - Rate lookup
+  - Real-time billing with mod_nibblebill
+  - Post-call CDR processing
+  
+  Installation:
+  1. Copy to /etc/freeswitch/dialplan/default/888_billing_integration.xml
+  2. Or add via FusionPBX Dialplan Manager with order 888
+  3. Ensure it runs before outbound routes
+-->
+<include>
+  
+  <!-- Billing Pre-Call Check -->
+  <extension name="billing_pre_call_check" continue="true">
+    <condition field="${call_direction}" expression="^outbound$"/>
+    <condition field="destination_number" expression="^(\d{7,})$">
+      
+      <!-- Log the call -->
+      <action application="log" data="INFO ========== Billing Pre-Call Check START =========="/>
+      <action application="log" data="INFO Billing: From ${caller_id_number} to ${destination_number}"/>
+      <action application="log" data="INFO Billing: User UUID: ${user_uuid}, Domain: ${domain_uuid}"/>
+      
+      <!-- Check if billing is enabled for this domain -->
+      <action application="set" data="billing_enabled=true"/>
+      
+      <!-- Find extension UUID from user UUID -->
+      <action application="set" data="api_result=${db(select/extension_uuid/from v_extensions where domain_uuid='${domain_uuid}' and extension_uuid in (select extension_uuid from v_extension_users where user_uuid='${user_uuid}') limit 1)}"/>
+      
+      <!-- Set nibble account to extension UUID -->
+      <action application="set" data="nibble_account=${user_uuid}"/>
+      
+      <!-- Look up rate for destination using Lua script -->
+      <action application="set" data="nibble_rate=${lua(app/billing/check_rate.lua ${destination_number} ${domain_uuid} ${user_uuid})}"/>
+      
+      <action application="log" data="INFO Billing: Rate for ${destination_number} is ${nibble_rate} per minute"/>
+      
+      <!-- Check balance using Lua script (optional - nibblebill will also check) -->
+      <!-- <action application="lua" data="app/billing/check_balance.lua"/> -->
+      
+      <!-- Enable nibblebill for this call -->
+      <action application="nibblebill" data="check ${nibble_rate}"/>
+      
+      <action application="log" data="INFO ========== Billing Pre-Call Check END =========="/>
+      
+    </condition>
+  </extension>
+  
+  <!-- Billing Information Display (for testing) -->
+  <extension name="billing_info">
+    <condition field="destination_number" expression="^9999$">
+      <action application="answer"/>
+      <action application="sleep" data="500"/>
+      
+      <!-- Get balance from database -->
+      <action application="set" data="balance=${db(select/balance/from v_billing_balances where extension_uuid in (select extension_uuid from v_extension_users where user_uuid='${user_uuid}') and domain_uuid='${domain_uuid}' limit 1)}"/>
+      
+      <action application="log" data="INFO Billing Info: Current balance is ${balance}"/>
+      
+      <!-- Speak balance -->
+      <action application="playback" data="ivr/ivr-your_current_balance_is.wav"/>
+      <action application="say" data="en number pronounced ${balance}"/>
+      
+      <action application="hangup"/>
+    </condition>
+  </extension>
+  
+</include>

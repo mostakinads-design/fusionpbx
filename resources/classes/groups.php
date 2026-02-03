@@ -459,7 +459,7 @@ class groups {
 		$sql = "select * from v_groups ";
 		$sql .= "where domain_uuid is null ";
 		$result = $this->database->select($sql, null, 'all');
-		if (count($result) == 0) {
+		if (!is_array($result) || count($result) == 0) {
 			$x = 0;
 			$array['groups'][$x]['group_uuid'] = uuid();
 			$array['groups'][$x]['domain_uuid'] = null;
