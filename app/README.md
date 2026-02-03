@@ -6,13 +6,13 @@ This directory contains the core application modules for FusionPBX. Each subdire
 
 The modules included in this directory are part of the core FusionPBX installation and provide essential PBX features such as:
 
-- **Extensions** - Manage SIP extensions and users
-- **Dialplans** - Configure call routing and dialplan logic
-- **Conferences** - Conference bridge management
-- **Call Centers** - Call center queue and agent management
-- **Voicemail** - Voicemail system
-- **Call Recordings** - Call recording management
-- **IVR Menus** - Interactive Voice Response menus
+- **Extensions** - Manage SIP extensions and users.
+- **Dialplans** - Configure call routing and dialplan logic.
+- **Conferences** - Conference bridge management.
+- **Call Centers** - Call center queue and agent management.
+- **Voicemail** - Voicemail system.
+- **Call Recordings** - Call recording management.
+- **IVR Menus** - Interactive Voice Response menus.
 - And many more...
 
 ## Optional Add-on Modules

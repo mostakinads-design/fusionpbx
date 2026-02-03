@@ -62,7 +62,7 @@ This install script is designed to be an fast, simple, and in a modular way to i
 
 Some installations require special considerations. Visit https://github.com/fusionpbx/fusionpbx-install.sh readme section for more details.
 
-Optional Modules
+OPTIONAL MODULES
 --------------------------------------
 FusionPBX supports optional add-on modules such as billing, advanced reporting, and more. For information on how to download and install optional modules, see [MODULES.md](MODULES.md).
 

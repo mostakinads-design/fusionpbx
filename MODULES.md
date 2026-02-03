@@ -45,8 +45,8 @@ sudo chmod -R 755 /var/www/fusionpbx/app/billing
 After installation:
 
 1. Log in to your FusionPBX web interface as an administrator
-2. Navigate to Advanced → Upgrade
-3. Click on "App Defaults" to register the billing module
+2. Navigate to **Advanced → Upgrade**
+3. Click on **App Defaults** to register the billing module
 4. The billing module should now appear in your menu
 
 #### Module Detection in Code
