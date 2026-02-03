@@ -211,7 +211,7 @@ if (!class_exists('billing')) {
 		 * @param float $amount amount to add (positive) or deduct (negative)
 		 * @return bool success status
 		 */
-		public function update_balance($amount) {
+		public function update_balance($amount, $transaction_type = 'adjustment', $description = '', $billing_usage_uuid = null) {
 			//validate input
 			if (empty($this->domain_uuid)) {
 				return false;
@@ -220,30 +220,67 @@ if (!class_exists('billing')) {
 				return false;
 			}
 
-			//get current balance
-			$current_balance = $this->get_balance();
-			if ($current_balance === null) {
+			//get current balance and billing_balance_uuid
+			$sql = "SELECT balance, billing_balance_uuid FROM v_billing_balances ";
+			$sql .= "WHERE domain_uuid = :domain_uuid ";
+			$sql .= "AND extension_uuid = :extension_uuid ";
+
+			$parameters['domain_uuid'] = $this->domain_uuid;
+			$parameters['extension_uuid'] = $this->extension_uuid;
+
+			$result = $this->database->select($sql, $parameters, 'row');
+			
+			if (!$result) {
 				return false;
 			}
+			
+			$current_balance = floatval($result['balance']);
+			$billing_balance_uuid = $result['billing_balance_uuid'];
 
 			//calculate new balance
 			$new_balance = $current_balance + $amount;
 
 			//update balance
-			$sql = "UPDATE v_billing_balances SET ";
-			$sql .= "balance = :balance, ";
-			$sql .= "last_updated = NOW() ";
-			$sql .= "WHERE domain_uuid = :domain_uuid ";
-			$sql .= "AND extension_uuid = :extension_uuid ";
+			$sql_update = "UPDATE v_billing_balances SET ";
+			$sql_update .= "balance = :balance, ";
+			$sql_update .= "last_updated = NOW() ";
+			$sql_update .= "WHERE domain_uuid = :domain_uuid ";
+			$sql_update .= "AND extension_uuid = :extension_uuid ";
 
-			$parameters['balance'] = $new_balance;
-			$parameters['domain_uuid'] = $this->domain_uuid;
-			$parameters['extension_uuid'] = $this->extension_uuid;
+			$params_update['balance'] = $new_balance;
+			$params_update['domain_uuid'] = $this->domain_uuid;
+			$params_update['extension_uuid'] = $this->extension_uuid;
 
-			$this->database->execute($sql, $parameters);
+			$this->database->execute($sql_update, $params_update);
+
+			//record balance history
+			$history_uuid = uuid();
+			$sql_history = "INSERT INTO v_billing_balance_history (";
+			$sql_history .= "billing_balance_history_uuid, domain_uuid, billing_balance_uuid, ";
+			$sql_history .= "extension_uuid, transaction_type, amount, balance_before, ";
+			$sql_history .= "balance_after, description, billing_usage_uuid, insert_date";
+			$sql_history .= ") VALUES (";
+			$sql_history .= ":billing_balance_history_uuid, :domain_uuid, :billing_balance_uuid, ";
+			$sql_history .= ":extension_uuid, :transaction_type, :amount, :balance_before, ";
+			$sql_history .= ":balance_after, :description, :billing_usage_uuid, NOW()";
+			$sql_history .= ")";
+
+			$params_history['billing_balance_history_uuid'] = $history_uuid;
+			$params_history['domain_uuid'] = $this->domain_uuid;
+			$params_history['billing_balance_uuid'] = $billing_balance_uuid;
+			$params_history['extension_uuid'] = $this->extension_uuid;
+			$params_history['transaction_type'] = $transaction_type;
+			$params_history['amount'] = $amount;
+			$params_history['balance_before'] = $current_balance;
+			$params_history['balance_after'] = $new_balance;
+			$params_history['description'] = $description;
+			$params_history['billing_usage_uuid'] = $billing_usage_uuid;
+
+			$this->database->execute($sql_history, $params_history);
 
 			if ($this->debug) {
 				echo "Balance updated: {$current_balance} + {$amount} = {$new_balance}\n";
+				echo "History recorded: {$history_uuid}\n";
 			}
 
 			return true;
@@ -296,10 +333,7 @@ if (!class_exists('billing')) {
 				return false;
 			}
 
-			//deduct from balance
-			$this->update_balance(-$cost_details['total_cost']);
-
-			//save usage record
+			//save usage record first
 			$billing_usage_uuid = uuid();
 			$sql = "INSERT INTO v_billing_usage (";
 			$sql .= "billing_usage_uuid, domain_uuid, extension_uuid, xml_cdr_uuid, ";
@@ -329,6 +363,10 @@ if (!class_exists('billing')) {
 			$parameters['call_date'] = $call_date ?: date('Y-m-d H:i:s');
 
 			$this->database->execute($sql, $parameters);
+
+			//deduct from balance with history tracking
+			$description = "Call to " . $destination_number . " (" . gmdate("H:i:s", $duration) . ")";
+			$this->update_balance(-$cost_details['total_cost'], 'call_cost', $description, $billing_usage_uuid);
 
 			if ($this->debug) {
 				echo "Usage record created: {$billing_usage_uuid}\n";
