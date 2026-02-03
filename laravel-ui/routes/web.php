@@ -13,6 +13,9 @@ use App\Http\Controllers\DialerController;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\TopUpController;
 use App\Http\Controllers\DIDController;
+use App\Http\Controllers\SMSCampaignController;
+use App\Http\Controllers\VoiceBroadcastController;
+use App\Http\Controllers\OutboundRouteController;
 
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -84,3 +87,17 @@ Route::prefix('billing')->name('billing.')->group(function () {
     Route::put('/packages/{package}', [TopUpController::class, 'updatePackage'])->name('topup.updatePackage');
     Route::delete('/packages/{package}', [TopUpController::class, 'deletePackage'])->name('topup.deletePackage');
 });
+
+// SMS Campaigns
+Route::resource('sms-campaigns', SMSCampaignController::class);
+Route::post('sms-campaigns/{smsCampaign}/start', [SMSCampaignController::class, 'start'])->name('sms-campaigns.start');
+Route::post('sms-campaigns/{smsCampaign}/pause', [SMSCampaignController::class, 'pause'])->name('sms-campaigns.pause');
+
+// Voice Broadcasts
+Route::resource('voice-broadcasts', VoiceBroadcastController::class);
+Route::post('voice-broadcasts/{voiceBroadcast}/start', [VoiceBroadcastController::class, 'start'])->name('voice-broadcasts.start');
+Route::post('voice-broadcasts/{voiceBroadcast}/pause', [VoiceBroadcastController::class, 'pause'])->name('voice-broadcasts.pause');
+
+// Outbound Routes
+Route::resource('outbound-routes', OutboundRouteController::class);
+Route::post('outbound-routes/test', [OutboundRouteController::class, 'testRoute'])->name('outbound-routes.test');

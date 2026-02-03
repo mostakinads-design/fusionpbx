@@ -26,10 +26,10 @@
                             Extensions
                         </a>
                         <a href="{{ route('dids.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('dids.*') ? 'border-b-2 border-white' : '' }}">
-                            DIDs
+                            DIDs & Routes
                         </a>
-                        <a href="{{ route('campaigns.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('campaigns.*') ? 'border-b-2 border-white' : '' }}">
-                            Campaigns
+                        <a href="{{ route('campaigns.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('campaigns.*') || request()->routeIs('sms-campaigns.*') || request()->routeIs('voice-broadcasts.*') ? 'border-b-2 border-white' : '' }}">
+                            Campaigns & AI
                         </a>
                         <a href="{{ route('dialer.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ request()->routeIs('dialer.*') ? 'border-b-2 border-white' : '' }}">
                             Dialer
