@@ -61,7 +61,9 @@
         <param name="email-from" value="${voicemail_account}@${voicemail_domain}"/>
       </email>
       <!--<param name="storage-dir" value="/tmp"/>-->
-      <!--<param name="odbc-dsn" value="$${dsn}"/>-->
+      <!-- ODBC DSN is configured in vars.xml as $${dsn_voicemail} (format: dsn_name:username:password) -->
+      <!-- If dsn_voicemail is empty, voicemail will use SQLite database -->
+      <param name="odbc-dsn" value="$${dsn_voicemail}"/>
       <!--<param name="record-comment" value="Your Comment"/>-->
       <!--<param name="record-title" value="Your Title"/>-->
       <!--<param name="record-copyright" value="Your Copyright"/>-->
