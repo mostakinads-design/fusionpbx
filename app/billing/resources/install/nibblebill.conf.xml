@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FusionPBX Billing - nibblebill.conf.xml Template
+  
+  This configuration file enables mod_nibblebill for real-time prepaid billing.
+  Copy this file to: /etc/freeswitch/autoload_configs/nibblebill.conf.xml
+  Or let FusionPBX auto-generate it via app_defaults.php during upgrade.
+  
+  For more information: https://freeswitch.org/confluence/display/FREESWITCH/mod_nibblebill
+-->
+<configuration name="nibblebill.conf" description="FusionPBX Prepaid Billing Configuration">
+  <settings>
+    
+    <!-- Database Connection -->
+    <!-- FusionPBX uses ODBC/DSN connection, configure in switch settings -->
+    <!-- These settings use custom SQL instead of direct DB connection -->
+    
+    <!-- Database Table and Column Names -->
+    <param name="db_table" value="v_billing_balances"/>
+    <param name="db_column_cash" value="balance"/>
+    <param name="db_column_account" value="extension_uuid"/>
+    
+    <!-- Custom SQL for Balance Lookup -->
+    <!-- This queries the FusionPBX billing_balances table -->
+    <!-- Channel variables available: ${nibble_account}, ${domain_uuid} -->
+    <param name="custom_sql_lookup" value="SELECT balance FROM v_billing_balances WHERE extension_uuid='${nibble_account}' AND domain_uuid='${domain_uuid}'"/>
+    
+    <!-- Custom SQL for Balance Updates -->
+    <!-- Updates balance after each heartbeat or at call end -->
+    <!-- ${nibble_balance} contains the new balance value -->
+    <param name="custom_sql_save" value="UPDATE v_billing_balances SET balance=${nibble_balance}, last_updated=NOW() WHERE extension_uuid='${nibble_account}' AND domain_uuid='${domain_uuid}'"/>
+    
+    <!-- Heartbeat Settings -->
+    <!-- Check balance every 60 seconds during active calls -->
+    <!-- Set to 'off' to only bill at end of call -->
+    <param name="global_heartbeat" value="60"/>
+    <param name="heartbeat_update_rate" value="60"/>
+    
+    <!-- Low Balance Warning -->
+    <!-- Play warning when balance drops below this amount -->
+    <param name="lowbal_amt" value="5"/>
+    <param name="lowbal_action" value="play ivr/ivr-account_balance_low.wav"/>
+    
+    <!-- No Balance Action -->
+    <!-- Hangup call when balance reaches this amount (usually 0) -->
+    <param name="nobal_amt" value="0"/>
+    <param name="nobal_action" value="hangup"/>
+    
+    <!-- Per-Call Maximum -->
+    <!-- Maximum cost allowed per call (prevents runaway charges) -->
+    <param name="percall_max_amt" value="1000"/>
+    <param name="percall_action" value="hangup"/>
+    
+    <!-- Billing Precision -->
+    <!-- Number of decimal places for currency calculations -->
+    <param name="bill_precision" value="4"/>
+    
+  </settings>
+</configuration>

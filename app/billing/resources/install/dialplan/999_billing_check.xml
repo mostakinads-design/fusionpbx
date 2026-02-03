@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FusionPBX Billing - Pre-Call Balance Check
+  
+  This dialplan checks the user's balance before allowing outbound calls.
+  
+  Installation:
+  1. Copy to: /etc/freeswitch/dialplan/default/999_billing_check.xml
+  2. Or add via FusionPBX Dialplan Manager
+  3. Adjust order to run before outbound routing (use 999 or similar)
+  
+  This dialplan:
+  - Sets nibblebill variables for the call
+  - Checks if user has sufficient balance
+  - Blocks calls if balance is insufficient
+  - Integrates with FusionPBX billing module
+-->
+<include>
+  <extension name="billing_check" continue="true">
+    <condition field="destination_number" expression="^(\d{7,})$">
+      <action application="log" data="INFO Billing: Checking balance for ${caller_id_number} calling ${destination_number}"/>
+      
+      <!-- Set nibblebill account variable to extension UUID -->
+      <action application="set" data="nibble_account=${user_uuid}"/>
+      
+      <!-- Set domain UUID for multi-tenant support -->
+      <action application="set" data="domain_uuid=${domain_uuid}"/>
+      
+      <!-- Set initial rate (will be calculated based on destination) -->
+      <!-- This can be looked up from v_billing_rates table -->
+      <action application="set" data="nibble_rate=0.01"/>
+      
+      <!-- Check balance before call -->
+      <!-- This queries the database and blocks call if insufficient funds -->
+      <action application="nibblebill" data="check"/>
+      
+      <!-- Optional: Play balance to caller -->
+      <!-- <action application="nibblebill" data="adjust 0 speak_balance"/> -->
+      
+      <action application="log" data="INFO Billing: Balance check passed for ${caller_id_number}"/>
+    </condition>
+  </extension>
+</include>
