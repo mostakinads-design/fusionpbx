@@ -38,7 +38,7 @@ class CallCenterTierController extends Controller
             'tier_position' => 'required|integer|min:1',
         ]);
 
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         CallCenterTier::create($validated);
 
@@ -53,7 +53,7 @@ class CallCenterTierController extends Controller
             'tier_position' => 'required|integer|min:1',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $callCenterTier->update($validated);
 

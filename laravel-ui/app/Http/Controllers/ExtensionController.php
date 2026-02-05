@@ -57,7 +57,7 @@ class ExtensionController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         Extension::create($validated);
 
@@ -92,7 +92,7 @@ class ExtensionController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $extension->update($validated);
 

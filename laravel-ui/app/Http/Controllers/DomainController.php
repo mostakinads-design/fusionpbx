@@ -37,7 +37,7 @@ class DomainController extends Controller
             'domain_description' => 'nullable|string',
         ]);
 
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         Domain::create($validated);
 
@@ -58,7 +58,7 @@ class DomainController extends Controller
             'domain_description' => 'nullable|string',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $domain->update($validated);
 

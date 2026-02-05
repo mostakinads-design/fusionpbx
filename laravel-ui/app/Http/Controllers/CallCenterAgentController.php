@@ -57,7 +57,7 @@ class CallCenterAgentController extends Controller
             'agent_enabled' => 'boolean',
         ]);
 
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         CallCenterAgent::create($validated);
 
@@ -89,7 +89,7 @@ class CallCenterAgentController extends Controller
             'agent_enabled' => 'boolean',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $callCenterAgent->update($validated);
 
@@ -113,7 +113,7 @@ class CallCenterAgentController extends Controller
 
         $callCenterAgent->update([
             'agent_status' => $validated['agent_status'],
-            'update_user' => auth()->user()->username ?? 'system',
+            'update_user' => optional(auth()->user())->username ?? 'system',
         ]);
 
         return redirect()->back()

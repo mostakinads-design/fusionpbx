@@ -75,7 +75,7 @@ class CampaignContactController extends Controller
                         'contact_email' => $row[2] ?? null,
                         'contact_status' => 'pending',
                         'call_attempts' => 0,
-                        'insert_user' => auth()->user()->username ?? 'system',
+                        'insert_user' => optional(auth()->user())->username ?? 'system',
                     ]);
 
                     $imported++;

@@ -59,7 +59,7 @@ class CampaignController extends Controller
         ]);
 
         $validated['status'] = 'draft';
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         Campaign::create($validated);
 
@@ -92,7 +92,7 @@ class CampaignController extends Controller
             'max_retry_attempts' => 'nullable|integer|min:0',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $campaign->update($validated);
 
@@ -117,7 +117,7 @@ class CampaignController extends Controller
 
         $campaign->update([
             'status' => 'running',
-            'update_user' => auth()->user()->username ?? 'system',
+            'update_user' => optional(auth()->user())->username ?? 'system',
         ]);
 
         return redirect()->back()
@@ -133,7 +133,7 @@ class CampaignController extends Controller
 
         $campaign->update([
             'status' => 'paused',
-            'update_user' => auth()->user()->username ?? 'system',
+            'update_user' => optional(auth()->user())->username ?? 'system',
         ]);
 
         return redirect()->back()
@@ -149,7 +149,7 @@ class CampaignController extends Controller
 
         $campaign->update([
             'status' => 'completed',
-            'update_user' => auth()->user()->username ?? 'system',
+            'update_user' => optional(auth()->user())->username ?? 'system',
         ]);
 
         return redirect()->back()

@@ -60,7 +60,7 @@ class CallCenterQueueController extends Controller
             'queue_enabled' => 'boolean',
         ]);
 
-        $validated['insert_user'] = auth()->user()->username ?? 'system';
+        $validated['insert_user'] = optional(auth()->user())->username ?? 'system';
 
         CallCenterQueue::create($validated);
 
@@ -105,7 +105,7 @@ class CallCenterQueueController extends Controller
             'queue_enabled' => 'boolean',
         ]);
 
-        $validated['update_user'] = auth()->user()->username ?? 'system';
+        $validated['update_user'] = optional(auth()->user())->username ?? 'system';
 
         $callCenterQueue->update($validated);
 
