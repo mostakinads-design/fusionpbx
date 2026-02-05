@@ -21,7 +21,7 @@ class DashboardController extends Controller
             'total_domains' => Domain::count(),
             'total_queues' => CallCenterQueue::count(),
             'total_agents' => CallCenterAgent::count(),
-            'active_campaigns' => Campaign::where('status', 'active')->count(),
+            'active_campaigns' => Campaign::where('status', 'running')->count(),
             'total_calls_today' => XmlCdr::whereDate('start_stamp', today())->count(),
             'answered_calls_today' => XmlCdr::whereDate('start_stamp', today())
                 ->whereNotNull('answer_stamp')->count(),

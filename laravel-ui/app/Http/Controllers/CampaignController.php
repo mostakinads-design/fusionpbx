@@ -44,8 +44,8 @@ class CampaignController extends Controller
         $validated = $request->validate([
             'domain_uuid' => 'required|exists:v_domains,domain_uuid',
             'campaign_name' => 'required|string|max:255',
-            'campaign_type' => 'required|string|in:voice,sms,both',
-            'broadcast_type' => 'nullable|string|max:255',
+            'campaign_type' => 'required|string|in:predictive,progressive,preview,manual',
+            'broadcast_type' => 'nullable|string|in:voice,sms,voice_sms',
             'ai_enabled' => 'boolean',
             'ai_provider' => 'nullable|string|max:255',
             'ai_model' => 'nullable|string|max:255',
@@ -58,7 +58,7 @@ class CampaignController extends Controller
             'max_retry_attempts' => 'nullable|integer|min:0',
         ]);
 
-        $validated['status'] = 'pending';
+        $validated['status'] = 'draft';
         $validated['insert_user'] = auth()->user()->username ?? 'system';
 
         Campaign::create($validated);
@@ -78,8 +78,8 @@ class CampaignController extends Controller
         $validated = $request->validate([
             'domain_uuid' => 'required|exists:v_domains,domain_uuid',
             'campaign_name' => 'required|string|max:255',
-            'campaign_type' => 'required|string|in:voice,sms,both',
-            'broadcast_type' => 'nullable|string|max:255',
+            'campaign_type' => 'required|string|in:predictive,progressive,preview,manual',
+            'broadcast_type' => 'nullable|string|in:voice,sms,voice_sms',
             'ai_enabled' => 'boolean',
             'ai_provider' => 'nullable|string|max:255',
             'ai_model' => 'nullable|string|max:255',
@@ -110,13 +110,13 @@ class CampaignController extends Controller
 
     public function start(Campaign $campaign)
     {
-        if ($campaign->status === 'active') {
+        if ($campaign->status === 'running') {
             return redirect()->back()
-                ->withErrors('Campaign is already active.');
+                ->withErrors('Campaign is already running.');
         }
 
         $campaign->update([
-            'status' => 'active',
+            'status' => 'running',
             'update_user' => auth()->user()->username ?? 'system',
         ]);
 
@@ -126,9 +126,9 @@ class CampaignController extends Controller
 
     public function pause(Campaign $campaign)
     {
-        if ($campaign->status !== 'active') {
+        if ($campaign->status !== 'running') {
             return redirect()->back()
-                ->withErrors('Campaign must be active to pause.');
+                ->withErrors('Campaign must be running to pause.');
         }
 
         $campaign->update([
