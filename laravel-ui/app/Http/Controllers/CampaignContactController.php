@@ -81,9 +81,7 @@ class CampaignContactController extends Controller
                     $imported++;
                 }
 
-                $campaign->update([
-                    'total_contacts' => $campaign->contacts()->count(),
-                ]);
+                $campaign->increment('total_contacts', $imported);
 
                 DB::commit();
                 fclose($handle);
@@ -111,9 +109,7 @@ class CampaignContactController extends Controller
 
         $campaign = Campaign::find($campaignUuid);
         if ($campaign) {
-            $campaign->update([
-                'total_contacts' => $campaign->contacts()->count(),
-            ]);
+            $campaign->decrement('total_contacts');
         }
 
         return redirect()->back()
