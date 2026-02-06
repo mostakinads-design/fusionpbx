@@ -10,3 +10,13 @@ secure/*.sqlite
 *.php~
 
 app/yealink/resources/firmware/*
+
+# Laravel Admin Panel
+laravel-admin-panel/vendor/
+laravel-admin-panel/node_modules/
+laravel-admin-panel/.env
+laravel-admin-panel/storage/*.key
+laravel-admin-panel/storage/logs/
+laravel-admin-panel/storage/framework/cache/
+laravel-admin-panel/storage/framework/sessions/
+laravel-admin-panel/storage/framework/views/
