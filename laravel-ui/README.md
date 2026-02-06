@@ -54,30 +54,41 @@ A comprehensive Laravel 11 user interface for FusionPBX that integrates directly
 
 ## Installation
 
+**IMPORTANT**: This Laravel UI is designed to be installed **separately** from FusionPBX, in its own directory.
+
 For detailed installation instructions, see [INSTALLATION.md](INSTALLATION.md).
 
 For quick setup, see [QUICKSTART.md](QUICKSTART.md).
 
+### Installation Paths
+
+- **FusionPBX**: `/var/www/fusionpbx` (your existing installation)
+- **Laravel UI**: `/var/www/laravel-ui` (separate directory)
+- **Database**: Shared FusionPBX PostgreSQL database
+
 ### Quick Overview
 
 ```bash
-# Clone the repository
+# Navigate to web root
 cd /var/www
-git clone https://github.com/your-repo/fusionpbx.git fusionpbx-laravel
+
+# Clone/copy the Laravel UI to a separate directory
+# Option 1: Clone from repository
+git clone https://github.com/your-repo/fusionpbx.git fusionpbx-repo
+cp -r fusionpbx-repo/laravel-ui /var/www/laravel-ui
+
+# Option 2: If you have the laravel-ui directory already
+# cp -r /path/to/laravel-ui /var/www/laravel-ui
 
 # Navigate to Laravel UI directory
-cd fusionpbx-laravel/laravel-ui
+cd /var/www/laravel-ui
+
+# Run the automatic configuration script (reads from FusionPBX config)
+sudo bash setup-from-fusionpbx.sh
 
 # Install dependencies
-composer install
+composer install --no-dev --optimize-autoloader
 npm install
-
-# Configure environment
-cp .env.example .env
-php artisan key:generate
-
-# Edit .env with your FusionPBX database credentials
-nano .env
 
 # Run migrations (only creates new campaign tables)
 php artisan migrate
@@ -86,8 +97,8 @@ php artisan migrate
 npm run build
 
 # Set permissions
-chown -R www-data:www-data storage bootstrap/cache
-chmod -R 775 storage bootstrap/cache
+sudo chown -R www-data:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
 
 # Configure Nginx (see nginx-laravel-port.conf)
 # Access at http://your-server:8080

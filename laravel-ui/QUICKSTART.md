@@ -1,6 +1,12 @@
 # FusionPBX Laravel UI - Quick Start Guide
 
-Get up and running in minutes with this quick installation guide.
+Get up and running in minutes with this quick installation guide for **separate installation** alongside FusionPBX.
+
+## Important: Installation Paths
+
+- **FusionPBX**: `/var/www/fusionpbx` (existing)
+- **Laravel UI**: `/var/www/laravel-ui` (new, separate)
+- **Database**: Shared FusionPBX PostgreSQL
 
 ## Prerequisites
 
@@ -22,48 +28,38 @@ curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ```
 
-### 2. Clone and Install
+### 2. Deploy to Separate Directory
 
 ```bash
-# Navigate to web directory
+# Navigate to web root
 cd /var/www
 
-# Clone repository
-git clone https://github.com/your-repo/fusionpbx.git fusionpbx-laravel
-cd fusionpbx-laravel/laravel-ui
+# Clone repository and extract Laravel UI
+git clone https://github.com/your-repo/fusionpbx.git fusionpbx-repo
+sudo cp -r fusionpbx-repo/laravel-ui /var/www/laravel-ui
+sudo rm -rf fusionpbx-repo
 
+# Set ownership
+sudo chown -R $USER:$USER /var/www/laravel-ui
+
+# Navigate to Laravel UI directory
+cd /var/www/laravel-ui
+```
+
+### 3. Auto-Configure Database (Recommended)
+
+```bash
+# This reads credentials from /etc/fusionpbx/config.conf
+sudo bash setup-from-fusionpbx.sh
+```
+
+### 4. Install Dependencies and Build
+
+```bash
 # Install dependencies
 composer install --no-dev --optimize-autoloader
 npm install
 
-# Setup environment
-cp .env.example .env
-php artisan key:generate
-```
-
-### 3. Configure Database
-
-Edit `.env`:
-
-```bash
-nano .env
-```
-
-Update database credentials:
-
-```env
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=fusionpbx
-DB_USERNAME=fusionpbx
-DB_PASSWORD=YOUR_FUSIONPBX_PASSWORD
-APP_URL=http://YOUR_SERVER_IP:8080
-```
-
-### 4. Migrate and Build
-
-```bash
 # Run migrations (creates campaign tables only)
 php artisan migrate
 
@@ -79,23 +75,14 @@ sudo chmod -R 775 storage bootstrap/cache
 
 ```bash
 # Copy configuration
-sudo cp nginx-laravel-port.conf /etc/nginx/sites-available/fusionpbx-laravel
+sudo cp nginx-laravel-port.conf /etc/nginx/sites-available/laravel-ui
 
-# Edit configuration
-sudo nano /etc/nginx/sites-available/fusionpbx-laravel
-```
+# Verify the root path is correct (already set to /var/www/laravel-ui/public)
+sudo nano /etc/nginx/sites-available/laravel-ui
+# Update server_name to your IP/domain
 
-Update `server_name` and `root` path:
-
-```nginx
-server_name YOUR_SERVER_IP;
-root /var/www/fusionpbx-laravel/laravel-ui/public;
-```
-
-Enable and reload:
-
-```bash
-sudo ln -s /etc/nginx/sites-available/fusionpbx-laravel /etc/nginx/sites-enabled/
+# Enable site
+sudo ln -s /etc/nginx/sites-available/laravel-ui /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -104,12 +91,30 @@ sudo systemctl reload nginx
 
 Open browser: `http://YOUR_SERVER_IP:8080`
 
-## Quick Test
+## Manual Database Configuration (Alternative)
 
-Verify everything works:
+If you didn't use the auto-config script:
 
 ```bash
+# Create .env from example
+cp .env.example .env
+php artisan key:generate
+
+# Get credentials from FusionPBX config
+sudo cat /etc/fusionpbx/config.conf | grep "^database.0"
+
+# Edit .env and paste the credentials
+nano .env
+```
+
+## Verification
+
+```bash
+# Verify both directories exist
+ls -la /var/www/ | grep -E "(fusionpbx|laravel-ui)"
+
 # Test database connection
+cd /var/www/laravel-ui
 php artisan tinker
 >>> DB::connection()->getPdo();
 >>> \App\Models\Domain::count();
@@ -298,6 +303,23 @@ php artisan config:clear
 - Extensions: `http://YOUR_IP:8080/extensions`
 - Campaigns: `http://YOUR_IP:8080/campaigns`
 - CDR: `http://YOUR_IP:8080/cdr`
+
+## Directory Structure
+
+After installation you should have:
+
+```
+/var/www/
+├── fusionpbx/          # FusionPBX (existing)
+│   ├── app/
+│   ├── core/
+│   └── ...
+└── laravel-ui/         # Laravel UI (new)
+    ├── app/
+    ├── public/
+    ├── resources/
+    └── ...
+```
 
 ## Get Help
 
