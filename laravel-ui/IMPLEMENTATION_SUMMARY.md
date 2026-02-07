@@ -144,11 +144,11 @@ A comprehensive Laravel 11 user interface for FusionPBX has been successfully im
 - ✅ Security headers in Nginx
 
 ### 12. Exclusions ✅
-- ✅ NO Billing Module
-- ✅ NO Balance Management
-- ✅ NO Top-up Packages
-- ✅ NO Payment Processing
-- ✅ NO Invoice Generation
+- ✅ NO Internal Billing Module (use CGRates instead)
+- ✅ NO Balance Management (handled by CGRates)
+- ✅ NO Top-up Packages (handled by CGRates)
+- ✅ NO Payment Processing (use external gateway + CGRates)
+- ✅ NO Invoice Generation (handled by CGRates)
 
 ---
 
@@ -345,10 +345,11 @@ laravel-ui/
 1. **README.md** - Overview, features, technology stack
 2. **INSTALLATION.md** - Detailed step-by-step installation guide
 3. **QUICKSTART.md** - Quick setup in minutes
+4. **CGRATES_INTEGRATION.md** - CGRates billing system integration
 
 ### Developer Documentation
-4. **PROJECT_STRUCTURE.md** - Complete file listing and structure
-5. **IMPLEMENTATION_SUMMARY.md** - This file, comprehensive summary
+5. **PROJECT_STRUCTURE.md** - Complete file listing and structure
+6. **IMPLEMENTATION_SUMMARY.md** - This file, comprehensive summary
 
 ---
 

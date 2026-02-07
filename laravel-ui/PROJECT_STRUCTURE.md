@@ -115,6 +115,7 @@
 - `README.md` - Project overview and features
 - `INSTALLATION.md` - Detailed installation guide
 - `QUICKSTART.md` - Quick start guide
+- `CGRATES_INTEGRATION.md` - CGRates billing integration guide
 
 ## Statistics
 
@@ -165,11 +166,11 @@
 
 ## Excluded Features (As Required)
 
-❌ NO Billing Module
-❌ NO Balance Management
-❌ NO Top-up Packages
-❌ NO Payment Processing
-❌ NO Invoice Generation
+❌ **NO Billing Module** - Use CGRates instead (see CGRATES_INTEGRATION.md)
+❌ **NO Balance Management** - Handled by CGRates
+❌ **NO Top-up Packages** - Handled by CGRates
+❌ **NO Payment Processing** - Handled by external payment gateway + CGRates
+❌ **NO Invoice Generation** - Handled by CGRates or external billing system
 
 ---
 

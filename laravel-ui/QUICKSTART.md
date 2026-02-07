@@ -321,6 +321,22 @@ After installation you should have:
     └── ...
 ```
 
+## Billing Setup (Optional)
+
+For billing and rating functionality, integrate CGRates:
+
+```bash
+# See detailed guide
+cat CGRATES_INTEGRATION.md
+
+# Quick CGRates setup
+sudo apt-get install cgrates
+sudo systemctl enable cgrates
+sudo systemctl start cgrates
+```
+
+Full setup instructions: [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md)
+
 ## Get Help
 
 - **Logs**: `storage/logs/laravel.log`
@@ -328,6 +344,7 @@ After installation you should have:
 - **PHP Errors**: `/var/log/php8.2-fpm.log`
 - **Documentation**: [README.md](README.md)
 - **Full Guide**: [INSTALLATION.md](INSTALLATION.md)
+- **Billing Setup**: [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md)
 
 ---
 

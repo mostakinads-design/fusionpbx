@@ -473,12 +473,15 @@ tar -czf storage_backup.tar.gz storage/app
 - Configure campaigns and import contacts
 - Set up call center queues and agents
 - Configure AI providers (if needed)
+- **Set up CGRates for billing** - see [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md)
 - Customize Tailwind theme (optional)
 - Set up automated backups
 
 For quick setup commands, see [QUICKSTART.md](QUICKSTART.md).
 
 For usage instructions, see [README.md](README.md).
+
+For billing setup, see [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md).
 
 ## Support
 

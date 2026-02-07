@@ -201,7 +201,7 @@ See configuration files in the root directory.
 - **XSS Prevention** - Blade template escaping
 - **Secure Headers** - Configured in Nginx
 - **Input Validation** - Request validation on all forms
-- **No Billing Code** - Intentionally excluded for security
+- **No Internal Billing** - Uses CGRates for billing operations (see [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md))
 
 ## Performance
 
@@ -230,7 +230,8 @@ Contributions are welcome! Please follow Laravel and FusionPBX coding standards.
 - Built on [Laravel 11](https://laravel.com)
 - Integrates with [FusionPBX](https://www.fusionpbx.com)
 - Styled with [Tailwind CSS](https://tailwindcss.com)
+- Billing via [CGRates](https://cgrates.org) - Professional rating system
 
 ---
 
-**Note**: This UI does NOT include billing, balance management, top-up packages, payment processing, or invoice generation. It focuses purely on call center operations and campaign management.
+**Note**: This UI does NOT include internal billing, balance management, top-up packages, payment processing, or invoice generation. For billing functionality, integrate with **CGRates** - see [CGRATES_INTEGRATION.md](CGRATES_INTEGRATION.md) for complete setup instructions.
