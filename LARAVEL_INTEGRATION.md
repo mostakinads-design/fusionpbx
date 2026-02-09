@@ -12,6 +12,14 @@ We've added a complete Laravel application alongside the existing FusionPBX PHP 
 - **Role-Based Access** - Admin and user roles with proper permissions
 - **Sample Data** - Pre-configured sample data for quick testing
 
+## 📍 Quick Links & Documentation
+
+- **📊 [Database Details](DATABASE_DETAILS.md)** - Quick reference for database configuration and tables
+- **📖 [Complete Database Schema](laravel-app/DATABASE_SCHEMA.md)** - Comprehensive schema documentation with all tables, relationships, and queries
+- **🔧 [Installation Guide](laravel-app/INSTALLATION.md)** - 10-minute setup instructions
+- **🚀 [API Documentation](laravel-app/API_DOCUMENTATION.md)** - All 27 API endpoints with examples
+- **📚 [Laravel README](laravel-app/README_LARAVEL.md)** - Complete Laravel guide with deployment info
+
 ## 📁 Repository Structure
 
 ```
@@ -113,6 +121,8 @@ Optimized MySQL schema with:
 - **Settings** - Flexible key-value configuration
 
 All tables include proper indexes for performance.
+
+**📊 Full Database Documentation:** See [`DATABASE_DETAILS.md`](DATABASE_DETAILS.md) for quick reference or [`laravel-app/DATABASE_SCHEMA.md`](laravel-app/DATABASE_SCHEMA.md) for complete schema details.
 
 ## 📖 Documentation
 
