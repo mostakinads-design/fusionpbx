@@ -1,5 +1,14 @@
-What is [FusionPBX](https://www.fusionpbx.com/)?
---------------------------------------
+# FusionPBX
+
+## 🆕 NEW: Laravel 12 + MySQL Integration Added!
+
+**📊 Looking for Database Details?** → See [`DATABASE_DETAILS.md`](DATABASE_DETAILS.md) for quick reference or [`laravel-app/DATABASE_SCHEMA.md`](laravel-app/DATABASE_SCHEMA.md) for complete documentation.
+
+**📚 Full Laravel Documentation:** → See [`LARAVEL_INTEGRATION.md`](LARAVEL_INTEGRATION.md)
+
+---
+
+## What is [FusionPBX](https://www.fusionpbx.com/)?
 
 [FusionPBX](https://www.fusionpbx.com/) can be used as a single or domain based multi-tenant PBX, carrier grade switch, call center server, fax server, VoIP server, voicemail server, conference server, voice application server, multi-tenant appliance framework and more. [FreeSWITCH™](https://freeswitch.com) is a highly scalable, multi-threaded, multi-platform communication platform. 
 
